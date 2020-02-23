@@ -26,5 +26,11 @@
   "homepage": "https://github.com/keaton-freude/nimble-logging#readme",
   "files": [
     "dist/**/*"
-  ]
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.2"
+  }
 }
