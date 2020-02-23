@@ -1,0 +1,30 @@
+{
+  "name": "nimble-logging",
+  "version": "1.0.2",
+  "description": "Logger",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keaton-freude/nimble-logging.git"
+  },
+  "keywords": [
+    "log",
+    "logger",
+    "logging",
+    "nimble"
+  ],
+  "author": "Keaton Freude",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keaton-freude/nimble-logging/issues"
+  },
+  "homepage": "https://github.com/keaton-freude/nimble-logging#readme",
+  "files": [
+    "dist/**/*"
+  ]
+}
