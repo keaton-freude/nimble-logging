@@ -78,8 +78,4 @@ describe("Logger Client", () => {
             }
         }
     });
-
-    it("Log methods should result in unique levels", async () => {
-        // Very similar to above, but routed through the logger. This ensures
-    });
 });
