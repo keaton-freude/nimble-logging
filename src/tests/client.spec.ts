@@ -61,13 +61,12 @@ describe("Logger Client", () => {
     it("Should have unique values for log levels", async () => {
         // Assert every log level is unique. Duplicates break our
         // contract
-        interface Entry {
-            id: number;
-            count: number;
-        }
         const map: Array<number> = [];
-        for (const level in Object.values(LogLevel)) {
-            if (Number(level) !== NaN) {
+        const values = Object.values(LogLevel);
+
+        for (const level of values) {
+            const val = Number(level);
+            if (!isNaN(val)) {
                 // Its a number
                 if (map[Number(level)] !== undefined) {
                     // been here already
