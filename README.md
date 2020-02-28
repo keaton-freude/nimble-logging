@@ -1,6 +1,6 @@
 # Nimble Logging
 
-A simple logging framework for connecting various logger clients to backend sinks, either directly or through other pipes (like network-syncing).
+A simple logging framework for connecting various logger clients to backend sinks, either directly or through other pipes (like network-syncing)
 
 My usecase is this that I have many different apps running, in my case its:
 
