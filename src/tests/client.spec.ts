@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ILoggerSink } from "../client/sink";
+import { ILoggerSink } from "../sink/sink";
 
 import "mocha";
 import { LogLevel } from "../client/log-level";

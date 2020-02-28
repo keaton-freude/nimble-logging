@@ -1,4 +1,4 @@
-import { ILoggerSink } from "./sink";
+import { ILoggerSink } from "../sink/sink";
 import { LogLevel } from "./log-level";
 
 /**
