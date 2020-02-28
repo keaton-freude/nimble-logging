@@ -36,6 +36,28 @@ The key aspects above are:
 
 NOTE: Currently the above does _not_ assume that Timestamps are the _real_ time they happened. But rather the time, relative to the system, things happened. We use a "first-come-first-serve" model in organizing the logs, which may mean there will be some jitter in the ordering. If this becomes an issue, it will be addressed.
 
+## Design
+
+The design revolves around the concept of a log-producer (client) and a sink. Clients are created and configured with one or more sinks. Sinks will receive the log messages, along with call-site customization (log-levels for instance) and decide how to "sink" that message.
+
+The most basic kind of sink would be a `FileSink` which takes the log message and writes it out to a file.
+
+Sinks can do _anything_ they wish with the log message, including forwarding logs to additional sinks or endpoints.
+
+For instance, to achieve "browser->backend" logging, our setup will look like:
+
+`LoggerClient.Info("Message") -> NetworkSink(<configured with some endpoint or socket>) ~~~ NETWORK TRANSPORT ~~~ NetworkSinkListener -> FileSink(<configured with some filename/rules>)`
+
+A `NetworkListener` is just another Sink! These are configured to receive log messages over some network endpoint and can be configured to match the corresponding NetworkSink.
+
+This can also be setup to automatically save log messages to a database based on some ruleset that a Sink might implement.
+
+All that is required is to implement the Sink interface, register it with your client and you're off.
+
+For sinks across a medium (like the network), they will need to be configured to listen for specific messages over something like a web-socket or an HTTP endpoint.
+
+TODO: Ensure we can verify that all data sent over a medium, like a network, is type-checked.
+
 ## Testing
 
 You can either run the tests in a `one-shot` mode, or in a `watch` mode.
