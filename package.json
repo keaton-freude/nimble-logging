@@ -9,7 +9,7 @@
         "test:watch": "mocha --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
         "test-debug": "mocha --inspect -r ts-node/register src/**/*.spec.ts",
         "test-debug:watch": "mocha --inspect --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
-        "build": "tsc"
+        "build": "tsc && browserify dist/nimble-logging.js -o dist/bundle.js"
     },
     "repository": {
         "type": "git",
@@ -33,6 +33,7 @@
     "devDependencies": {
         "@types/chai": "^4.2.9",
         "@types/mocha": "^7.0.1",
+        "browserify": "^16.5.0",
         "chai": "^4.2.0",
         "mocha": "^7.0.1",
         "prettier": "^1.19.1",
