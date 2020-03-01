@@ -2,7 +2,7 @@
     "name": "nimble-logging",
     "version": "1.0.18",
     "description": "Logger",
-    "main": "dist/bundle.js",
+    "main": "dist/nimble-logging.js",
     "types": "dist/nimble-logging.d.ts",
     "scripts": {
         "test": "mocha -r ts-node/register src/**/*.spec.ts",
