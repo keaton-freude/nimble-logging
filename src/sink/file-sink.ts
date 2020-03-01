@@ -36,7 +36,7 @@ export class FileSink implements ILoggerSink {
         }
     }
 
-    async SinkLog(message: string, level: LogLevel): Promise<void> {
+    async SinkLog(message: string): Promise<void> {
         ok(this._initialized, "FileSink is not initialized");
 
         this._writeStream.write(message);

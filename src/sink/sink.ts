@@ -1,4 +1,4 @@
-import { LogLevel } from "./log-level";
+import { LogLevel } from "../client/log-level";
 
 /**
  * A Sink accepts logger messages and does something with them.
@@ -20,5 +20,5 @@ import { LogLevel } from "./log-level";
  */
 
 export interface ILoggerSink {
-    SinkLog(message: string, level: LogLevel): Promise<void>;
+    SinkLog(message: string): Promise<void>;
 }

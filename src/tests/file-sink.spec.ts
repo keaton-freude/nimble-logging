@@ -35,7 +35,7 @@ describe("File Sink", async () => {
                 "a"
             );
 
-            await fileSink.SinkLog("SomeMessage", LogLevel.Info);
+            await fileSink.SinkLog("SomeMessage");
 
             // Verify the message was sunk to a file
             const contents = (await readFileAsync(testFilePath)).toString();

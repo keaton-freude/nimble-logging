@@ -42,27 +42,27 @@ export class Logger extends ILoggerClient {
     }
     async Debug(message: string): Promise<void> {
         this._sinks.forEach(sink => {
-            return sink.SinkLog(message, LogLevel.Debug);
+            return sink.SinkLog(message);
         });
     }
     async Warning(message: string): Promise<void> {
         this._sinks.forEach(sink => {
-            return sink.SinkLog(message, LogLevel.Warning);
+            return sink.SinkLog(message);
         });
     }
     async Error(message: string): Promise<void> {
         this._sinks.forEach(sink => {
-            return sink.SinkLog(message, LogLevel.Error);
+            return sink.SinkLog(message);
         });
     }
     async Fatal(message: string): Promise<void> {
         this._sinks.forEach(sink => {
-            return sink.SinkLog(message, LogLevel.Fatal);
+            return sink.SinkLog(message);
         });
     }
     async Info(message: string): Promise<void> {
         this._sinks.forEach(sink => {
-            return sink.SinkLog(message, LogLevel.Info);
+            return sink.SinkLog(message);
         });
     }
 }
