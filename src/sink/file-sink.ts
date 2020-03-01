@@ -1,10 +1,7 @@
 import { ILoggerSink } from "./sink";
-import { LogLevel } from "../client/log-level";
-import { PathLike, createWriteStream, write, WriteStream, fstat } from "fs";
-import { promisify } from "util";
+import { PathLike, createWriteStream, WriteStream } from "fs";
 import { ok } from "assert";
 
-const asyncWrite = promisify(write);
 /**
  * A file sink is a simple sink which takes incoming log messages and writes them to a file.
  */
