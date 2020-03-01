@@ -2,7 +2,7 @@
     "name": "nimble-logging",
     "version": "1.0.19",
     "description": "Logger",
-    "main": "dist/nimble-logging.js",
+    "main": "dist/bundle.js",
     "types": "dist/nimble-logging.d.ts",
     "scripts": {
         "test": "mocha -r ts-node/register src/**/*.spec.ts",
@@ -30,9 +30,7 @@
     "homepage": "https://github.com/keaton-freude/nimble-logging#readme",
     "files": [
         "dist/**/*.d.ts",
-        "dist/bundle.js",
-        "dist/nimble-logging.js",
-        "dist/**/index.js"
+        "dist/bundle.js"
     ],
     "devDependencies": {
         "@types/chai": "^4.2.9",
