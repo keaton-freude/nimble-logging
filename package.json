@@ -1,6 +1,6 @@
 {
     "name": "nimble-logging",
-    "version": "1.0.22",
+    "version": "1.0.23",
     "description": "Logger",
     "main": "dist/bundle.js",
     "types": "dist/nimble-logging.d.ts",
