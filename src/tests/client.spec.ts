@@ -4,6 +4,7 @@ import { ILoggerSink } from "../sink/sink";
 import "mocha";
 import { LogLevel } from "../client/log-level";
 import { ILoggerClient, Logger } from "../client";
+import { BasicLogFormatter } from "../client/log-formatter";
 
 /**
  * Create our own Sink, so we can intercept the logs and verify them
@@ -21,7 +22,10 @@ describe("Logger Client", () => {
     let logger: ILoggerClient;
     beforeEach(() => {
         // Create the logger instance, reseting any lingering state
-        logger = new Logger([new TestLogSink()]);
+        logger = new Logger({
+            sinks: [new TestLogSink()],
+            formatter: new BasicLogFormatter(),
+        });
         lastMessage = "";
     });
 

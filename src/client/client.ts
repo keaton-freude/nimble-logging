@@ -1,5 +1,6 @@
 import { ILoggerSink } from "../sink/sink";
 import { LogLevel } from "./log-level";
+import { ILogFormatter } from "./log-formatter";
 
 /**
  * A client is the user-facing public API for creating new log messages
@@ -17,6 +18,11 @@ import { LogLevel } from "./log-level";
  * FATAL
  */
 
+export interface ClientSettings {
+    sinks: Array<ILoggerSink>;
+    formatter: ILogFormatter;
+}
+
 export abstract class ILoggerClient {
     // Currently just support sending strings, users are expected to transform their messages
     // into the appropriate string before calling the client using something like back-tick syntax
@@ -29,10 +35,10 @@ export abstract class ILoggerClient {
 
     abstract AddSink(sink: ILoggerSink): void;
 
-    protected _sinks: Array<ILoggerSink>;
+    protected _settings: ClientSettings;
 
-    constructor(sinks: Array<ILoggerSink>) {
-        this._sinks = sinks;
+    constructor(settings: ClientSettings) {
+        this._settings = settings;
     }
 }
 
@@ -41,27 +47,27 @@ export class Logger extends ILoggerClient {
         throw new Error("Method not implemented.");
     }
     async Debug(message: string): Promise<void> {
-        this._sinks.forEach(sink => {
+        this._settings.sinks.forEach(sink => {
             return sink.SinkLog(message);
         });
     }
     async Warning(message: string): Promise<void> {
-        this._sinks.forEach(sink => {
+        this._settings.sinks.forEach(sink => {
             return sink.SinkLog(message);
         });
     }
     async Error(message: string): Promise<void> {
-        this._sinks.forEach(sink => {
+        this._settings.sinks.forEach(sink => {
             return sink.SinkLog(message);
         });
     }
     async Fatal(message: string): Promise<void> {
-        this._sinks.forEach(sink => {
+        this._settings.sinks.forEach(sink => {
             return sink.SinkLog(message);
         });
     }
     async Info(message: string): Promise<void> {
-        this._sinks.forEach(sink => {
+        this._settings.sinks.forEach(sink => {
             return sink.SinkLog(message);
         });
     }
