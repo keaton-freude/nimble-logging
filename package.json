@@ -30,7 +30,8 @@
     "homepage": "https://github.com/keaton-freude/nimble-logging#readme",
     "files": [
         "dist/**/*.d.ts",
-        "dist/bundle.js"
+        "dist/bundle.js",
+        "dist/**/*"
     ],
     "devDependencies": {
         "@types/chai": "^4.2.9",
