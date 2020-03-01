@@ -9,7 +9,8 @@
         "test:watch": "mocha --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
         "test-debug": "mocha --inspect -r ts-node/register src/**/*.spec.ts",
         "test-debug:watch": "mocha --inspect --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
-        "build": "tsc && browserify ./dist/nimble-logging.js -o dist/bundle.js"
+        "build": "tsc && browserify ./dist/nimble-logging.js -o dist/bundle.js",
+        "publish": "npm run build && npm publish"
     },
     "repository": {
         "type": "git",
