@@ -3,7 +3,7 @@ var tsify = require("tsify");
 
 browserify()
     .add("src/index.ts")
-    .plugin(tsify, { noImplicitAny: true })
+    .plugin(tsify, { noImplicitAny: true, project: "./tsconfig.json" })
     .bundle()
     .on("error", function(error) {
         console.error(error.toString());
