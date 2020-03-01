@@ -31,7 +31,8 @@
     "files": [
         "dist/**/*.d.ts",
         "dist/bundle.js",
-        "dist/**/*"
+        "dist/nimble-logging.js",
+        "dist/**/index.js"
     ],
     "devDependencies": {
         "@types/chai": "^4.2.9",
