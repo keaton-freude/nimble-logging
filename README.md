@@ -58,6 +58,16 @@ For sinks across a medium (like the network), they will need to be configured to
 
 TODO: Ensure we can verify that all data sent over a medium, like a network, is type-checked.
 
+### Design Notes (Personal Notes)
+
+The high level class flow (based on interfaces) should be:
+`ILoggerClient` -> `ILogFormatter` -> 1 or more `ILoggerSink`
+
+Implications here are that `ILoggerSink` is _only_ for sinking logs, it does not have any indication of the level of the log.
+This means that any kind of filtering based on logging should either happen in the `ILoggerClient` settings, or in post-processing (which is what I intend to do for myself as the logs will be created by third parties).
+
+`ILogFormatter` is an interface which takes in _all_ known information about the log (currently the log message & the log level) and produces a string which can be sunk.
+
 ## Testing
 
 You can either run the tests in a `one-shot` mode, or in a `watch` mode.
