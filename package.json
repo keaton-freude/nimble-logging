@@ -8,7 +8,7 @@
         "test:watch": "mocha --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
         "test-debug": "mocha --inspect -r ts-node/register src/**/*.spec.ts",
         "test-debug:watch": "mocha --inspect --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
-        "build": "tsc && node build.js > dist/bundle.js",
+        "build": "tsc",
         "prepare": "npm run build"
     },
     "repository": {
