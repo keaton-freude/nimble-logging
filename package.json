@@ -1,6 +1,6 @@
 {
     "name": "nimble-logging",
-    "version": "1.0.27",
+    "version": "1.0.28",
     "description": "Logger",
     "types": "dist/nimble-logging.d.ts",
     "scripts": {
