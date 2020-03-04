@@ -9,6 +9,8 @@ var app = require("express")();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 
+app.get('/', (req, res) => res.send("Hello, world!"));
+
 server.listen(1337);
 console.log('Listening on port 1337');
 
