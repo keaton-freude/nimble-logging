@@ -1,3 +1,7 @@
+# CI Status
+
+[![Build Status](https://travis-ci.org/keaton-freude/nimble-logging.svg?branch=master)](https://travis-ci.org/keaton-freude/nimble-logging)
+
 # Nimble Logging
 
 A simple logging framework for connecting various logger clients to backend sinks, either directly or through other pipes (like network-syncing)
