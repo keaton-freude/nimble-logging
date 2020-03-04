@@ -14,6 +14,10 @@ module.exports = function(config) {
         files: [
             { pattern: "dist/bundle.js", type: "module" },
             "src/tests/browser/*.js",
+            {
+                pattern: "node_modules/socket.io-client/dist/socket.io.js",
+                type: "js",
+            },
         ],
 
         // list of files / patterns to exclude

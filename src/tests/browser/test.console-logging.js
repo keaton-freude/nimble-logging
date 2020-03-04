@@ -20,7 +20,6 @@ describe("Console Logging", () => {
         });
 
         logger.Info("Hello, world!");
-        console.stdlog(console.logs);
 
         expect(console.logs[0][0]).to.equal("Hello, world!");
     });
