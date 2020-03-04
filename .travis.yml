@@ -3,3 +3,4 @@ dist: trusty
 sudo: required
 addons:
     chrome: stable
+script: npm run ci
