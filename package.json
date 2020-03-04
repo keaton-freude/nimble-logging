@@ -5,15 +5,15 @@
     "main": "dist/index.js",
     "types": "dist/nimble-logging.d.ts",
     "scripts": {
-        "run-unit-tests": "mocha -r ts-node/register src/**/*.spec.ts",
-        "run-unit-tests:watch": "mocha --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
-        "run-unit-tests-debug": "mocha --inspect -r ts-node/register src/**/*.spec.ts",
-        "run-unit-tests-debug:watch": "mocha --inspect --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
+        "unit-tests": "mocha -r ts-node/register src/**/*.spec.ts",
+        "unit-tests:watch": "mocha --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
+        "unit-tests-debug": "mocha --inspect -r ts-node/register src/**/*.spec.ts",
+        "unit-tests-debug:watch": "mocha --inspect --watch --watch-files=src/ -r ts-node/register src/**/*.spec.ts",
         "build": "npm run build-ts && npm run bundle",
         "build-ts": "tsc",
         "bundle": "browserify -s nimble dist/index.js -o dist/bundle.js",
         "browser-test": "karma start --single-run",
-        "test": "npm run test && echo 'Mocha Passed' && npm run browser-test && echo 'Karma passed' || false"
+        "test": "npm run build && npm run unit-tests && echo 'Mocha Passed' && npm run browser-test && echo 'Karma passed' || false"
     },
     "repository": {
         "type": "git",
