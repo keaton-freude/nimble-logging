@@ -72,7 +72,17 @@ This means that any kind of filtering based on logging should either happen in t
 
 `ILogFormatter` is an interface which takes in _all_ known information about the log (currently the log message & the log level) and produces a string which can be sunk.
 
-## Testing
+# Testing
+
+## All Tests
+
+This is what is running in CI. Both the unit-tests and the browser tests (to validate end-to-end works)
+
+Run the tests with: `npm run test`
+
+This will handle everything for you, including building, bundling and running all tests.
+
+## Unit Tests with mocha (non-debug)
 
 You can either run the tests in a `one-shot` mode, or in a `watch` mode.
 
@@ -81,7 +91,7 @@ You can either run the tests in a `one-shot` mode, or in a `watch` mode.
 
 In `watch` mode, any changes to typescript files will trigger a rerun of the tests. Great for TDD.
 
-## Debug
+## Unit Tests with mocha (debug)
 
 You can run the tests in debug mode with:
 
@@ -91,3 +101,10 @@ You can run the tests in debug mode with:
 The debugger will automatically attach in `one-shot` mode and `watch` mode.
 
 Watch mode allows you to re-launch and re-attach the debugger whenever file changes are made.
+
+## End-to-end tests with karma
+
+You can run the karma tests with:
+
+-   One Shot: Run: `npm run browser-test`
+-   Watch: Run: `npm run browser-test:watch`

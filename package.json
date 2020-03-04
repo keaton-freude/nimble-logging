@@ -13,6 +13,7 @@
         "build-ts": "tsc",
         "bundle": "browserify -s nimble dist/index.js -o dist/bundle.js",
         "browser-test": "karma start --single-run",
+        "browser-test:watch": "karma start",
         "test": "npm run build && npm run unit-tests && echo 'Mocha Passed' && npm run browser-test && echo 'Karma passed' || false"
     },
     "repository": {
