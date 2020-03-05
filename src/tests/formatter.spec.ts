@@ -7,7 +7,7 @@ describe("Log Formatter", () => {
         message: "This is a message",
         loglevel: LogLevel.Info,
         source: "Source",
-        timestamp: new Date(2000, 0, 1, 12, 0, 0, 0),
+        timestamp: new Date('Jan 01 2000 12:00:00 PST'),
     };
 
     it("Should support {message} type", () => {
@@ -40,7 +40,9 @@ describe("Log Formatter", () => {
         const result = formatter.format(context);
 
         // NOTE: This will only work in PST time-zone I think. Fix it..
-        expect(result).to.equal("2000-01-01 20:00:00");
+        expect(result).to.equal(new Date('Jan 01 2000 12:00:00 PST').toISOString()
+                .replace(/T/, " ")
+                .replace(/\..+/, ""));
     });
 
     it("Should support {source} type", () => {
