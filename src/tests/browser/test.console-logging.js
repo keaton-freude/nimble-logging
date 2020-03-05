@@ -16,7 +16,7 @@ describe("Console Logging", () => {
 
         const logger = new nimble.Logger({
             sinks: [new nimble.ConsoleSink()],
-            formatter: new nimble.BasicLogFormatter(),
+            formatter: new nimble.InterpolatedLogFormatter("{message}"),
         });
 
         logger.Info("Hello, world!");

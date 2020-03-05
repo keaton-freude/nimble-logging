@@ -3,8 +3,7 @@ import { ILoggerSink } from "../sink/sink";
 
 import "mocha";
 import { LogLevel } from "../client/log-level";
-import { ILoggerClient, Logger } from "../client";
-import { BasicLogFormatter } from "../client/log-formatter";
+import { ILoggerClient, Logger, InterpolatedLogFormatter } from "../client";
 
 /**
  * Create our own Sink, so we can intercept the logs and verify them
@@ -31,7 +30,7 @@ describe("Logger Client", () => {
         // Create the logger instance, reseting any lingering state
         logger = new Logger({
             sinks: [new TestLogSink()],
-            formatter: new BasicLogFormatter(),
+            formatter: new InterpolatedLogFormatter("{message}"),
         });
         lastMessage = "";
     });
@@ -87,7 +86,7 @@ describe("Logger Client", () => {
         // Then add another custom sink, ensure we are receiving messages on both
         let _logger = new Logger({
             sinks: [],
-            formatter: new BasicLogFormatter(),
+            formatter: new InterpolatedLogFormatter("{message}"),
         });
 
         _logger.AddSink(new TestLogSink());

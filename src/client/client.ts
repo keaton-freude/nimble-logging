@@ -1,6 +1,7 @@
 import { ILoggerSink } from "../sink/sink";
 import { LogLevel } from "./log-level";
 import { ILogFormatter } from "./log-formatter";
+import { LogContext } from "./log-context";
 
 /**
  * A client is the user-facing public API for creating new log messages
@@ -47,28 +48,78 @@ export class Logger extends ILoggerClient {
         this._settings.sinks.push(sink);
     }
     async Debug(message: string): Promise<void> {
+        // Build the context, format the log then sink it
+        const context = {
+            timestamp: new Date(),
+            loglevel: LogLevel.Debug,
+            message: message,
+            source: "Source",
+        } as LogContext;
+
+        const formattedMessage = this._settings.formatter.format(context);
+
         this._settings.sinks.forEach(sink => {
-            return sink.SinkLog(message);
+            return sink.SinkLog(formattedMessage);
         });
     }
     async Warning(message: string): Promise<void> {
+        // Build the context, format the log then sink it
+        const context = {
+            timestamp: new Date(),
+            loglevel: LogLevel.Warning,
+            message: message,
+            source: "Source",
+        } as LogContext;
+
+        const formattedMessage = this._settings.formatter.format(context);
+
         this._settings.sinks.forEach(sink => {
-            return sink.SinkLog(message);
+            return sink.SinkLog(formattedMessage);
         });
     }
     async Error(message: string): Promise<void> {
+        // Build the context, format the log then sink it
+        const context = {
+            timestamp: new Date(),
+            loglevel: LogLevel.Error,
+            message: message,
+            source: "Source",
+        } as LogContext;
+
+        const formattedMessage = this._settings.formatter.format(context);
+
         this._settings.sinks.forEach(sink => {
-            return sink.SinkLog(message);
+            return sink.SinkLog(formattedMessage);
         });
     }
     async Fatal(message: string): Promise<void> {
+        // Build the context, format the log then sink it
+        const context = {
+            timestamp: new Date(),
+            loglevel: LogLevel.Fatal,
+            message: message,
+            source: "Source",
+        } as LogContext;
+
+        const formattedMessage = this._settings.formatter.format(context);
+
         this._settings.sinks.forEach(sink => {
-            return sink.SinkLog(message);
+            return sink.SinkLog(formattedMessage);
         });
     }
     async Info(message: string): Promise<void> {
+        // Build the context, format the log then sink it
+        const context = {
+            timestamp: new Date(),
+            loglevel: LogLevel.Info,
+            message: message,
+            source: "Source",
+        } as LogContext;
+
+        const formattedMessage = this._settings.formatter.format(context);
+
         this._settings.sinks.forEach(sink => {
-            return sink.SinkLog(message);
+            return sink.SinkLog(formattedMessage);
         });
     }
 }

@@ -7,7 +7,7 @@ describe("Websocket Logging", () => {
         // connect the websocket
         const logger = new nimble.Logger({
             sinks: [new nimble.WebsocketSink(socket)],
-            formatter: new nimble.BasicLogFormatter(),
+            formatter: new nimble.InterpolatedLogFormatter("{message}"),
         });
 
         socket.on("ServerResponse", message => {
