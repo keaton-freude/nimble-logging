@@ -11,10 +11,17 @@ import { BasicLogFormatter } from "../client/log-formatter";
  */
 
 let lastMessage: string = "";
+let lastMessage2: string = "";
 
 class TestLogSink implements ILoggerSink {
     async SinkLog(message: string): Promise<void> {
         lastMessage = message;
+    }
+}
+
+class TestLogSink2 implements ILoggerSink {
+    async SinkLog(message: string): Promise<void> {
+        lastMessage2 = message;
     }
 }
 
@@ -73,5 +80,27 @@ describe("Logger Client", () => {
                 map[Number(level)]++;
             }
         }
+    });
+
+    it("Should add additional sinks", async () => {
+        // Create a Logger with no sinks, add our test sink, ensure we are receiving messages
+        // Then add another custom sink, ensure we are receiving messages on both
+        let _logger = new Logger({
+            sinks: [],
+            formatter: new BasicLogFormatter(),
+        });
+
+        _logger.AddSink(new TestLogSink());
+
+        _logger.Info("Info Message");
+
+        expect(lastMessage).to.equal("Info Message");
+
+        _logger.AddSink(new TestLogSink2());
+
+        _logger.Info("Info Message 2");
+
+        expect(lastMessage).to.equal("Info Message 2");
+        expect(lastMessage2).to.equal("Info Message 2");
     });
 });

@@ -44,7 +44,7 @@ export abstract class ILoggerClient {
 
 export class Logger extends ILoggerClient {
     AddSink(sink: ILoggerSink): void {
-        throw new Error("Method not implemented.");
+        this._settings.sinks.push(sink);
     }
     async Debug(message: string): Promise<void> {
         this._settings.sinks.forEach(sink => {
