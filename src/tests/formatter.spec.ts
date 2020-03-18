@@ -1,4 +1,9 @@
-import { ILogFormatter, InterpolatedLogFormatter, LogLevel } from "../client";
+import {
+    ILogFormatter,
+    InterpolatedLogFormatter,
+    LogLevel,
+    FormatStringError,
+} from "../client";
 import { LogContext } from "../client/log-context";
 import { expect } from "chai";
 
@@ -53,5 +58,40 @@ describe("Log Formatter", () => {
         const result = formatter.format(context);
 
         expect(result).to.equal("Source");
+    });
+
+    it("Should reject nested pairs", () => {
+        // We do not support '{{type1}type2}' or any kind
+        // of variant. Keeps the parsing simpler and doesn't seem
+        // very useful. Create a malformed format string and ensure
+        // it throws the correct error
+        try {
+            const formatter: ILogFormatter = new InterpolatedLogFormatter(
+                "{source{message}}"
+            );
+
+            expect(true).to.equal(false);
+        } catch (err) {
+            if (err instanceof FormatStringError) {
+                expect(true).to.equal(true);
+            } else {
+                expect(true).to.equal(false);
+            }
+        }
+    });
+
+    it("Should reject unbalanced pairs", () => {
+        try {
+            const formatter: ILogFormatter = new InterpolatedLogFormatter(
+                "{source"
+            );
+            expect(true).to.equal(false);
+        } catch (err) {
+            if (err instanceof FormatStringError) {
+                expect(true).to.equal(true);
+            } else {
+                expect(true).to.equal(false);
+            }
+        }
     });
 });

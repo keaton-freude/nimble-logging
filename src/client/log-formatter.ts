@@ -55,13 +55,21 @@ interface InterpolationPoint {
     location: SubstringLocation;
 }
 
+// Simple error class so we can filter for this specific error
+export class FormatStringError extends Error {
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, FormatStringError.prototype);
+    }
+}
+
 /**
  * An interpolated log formatter has an associated format string
  * Identifiers within the format string are replaced with values
  * in the LogContext
  */
 export class InterpolatedLogFormatter {
-    private readonly _formatString: string;
+    private _formatString: string;
     private _interpolationPoints: Array<InterpolationPoint>;
 
     constructor(formatString: string) {
@@ -77,6 +85,10 @@ export class InterpolatedLogFormatter {
         });
     }
 
+    private fixEscapedBrackets(): void {
+        // Users can escape brackets with `\{}`
+    }
+
     private cacheInterpolationPoints(): void {
         // Search through format string looking for interpolation points
         // As they are found, replace them using the interpolation map
@@ -84,7 +96,9 @@ export class InterpolatedLogFormatter {
         // Interpolation points take the form: {<type>}
         // This means that `{` is invalid to be used along, unless it has a
         // matching `}` _and_ the type is valid.
-        // Users can escape the '{` with `\{`
+        // NOTE: There is currently _no way_ to escape the Brackets!
+        // This can be changed if necessary, but don't want to spend time on the
+        // edge cases right now
 
         // NOTE: There's probably a smoother way to handle this but here we are
         let lastIndex = 0;
@@ -99,16 +113,6 @@ export class InterpolatedLogFormatter {
             // If we can't find a '{' we are done
             if (currentOpenBracketIndex === -1) {
                 break;
-            }
-
-            // We found one, check to see if it was escaped
-
-            // If the { was at the very beginning, then it was impossible to be escaped
-            if (currentOpenBracketIndex !== 0) {
-                if (this._formatString[currentOpenBracketIndex - 1] === "\\") {
-                    // This was escaped, move on
-                    continue;
-                }
             }
 
             // Find the matching '}'
@@ -126,7 +130,7 @@ export class InterpolatedLogFormatter {
             // Also, if we find a `}` before we find a `{` this is a malformed pair
 
             if (currentClosedBracketIndex === -1) {
-                throw Error(
+                throw new FormatStringError(
                     `Format string: ${this._formatString} invalid.
                     Did not find a closing bracket for open bracket at index ${currentOpenBracketIndex}
                 `
@@ -139,7 +143,7 @@ export class InterpolatedLogFormatter {
             ) {
                 // We don't support nested interpolation points, this means we found
                 // another '{' before finding the closing bracket
-                throw Error(
+                throw new FormatStringError(
                     `Format string: ${this._formatString} invalid.
                     Did not find a matching closing bracket for open bracket at index ${currentOpenBracketIndex}
                     Instead found an open bracket at index ${nextOpenBracketIndex}
@@ -150,7 +154,7 @@ export class InterpolatedLogFormatter {
             // If the closing bracket is immediately after the open bracket, this is invalid as
             // no interpolation type was specified
             if (currentOpenBracketIndex === currentClosedBracketIndex + 1) {
-                throw Error(
+                throw new FormatStringError(
                     `Format string: ${this._formatString} invalid.
                     No interpolation type specified between brackets at ${currentOpenBracketIndex} and ${currentClosedBracketIndex}
                     `
@@ -164,7 +168,7 @@ export class InterpolatedLogFormatter {
             );
 
             if (!this.interpolationTypeExists(interpolationType)) {
-                throw Error(
+                throw new FormatStringError(
                     `Format string: ${this._formatString} invalid.
                     Interpolation type ${interpolationType} is not valid. Are you missing the registration of the type?
                     The location of this type is: ${currentOpenBracketIndex +
