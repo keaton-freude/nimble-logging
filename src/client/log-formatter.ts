@@ -16,6 +16,9 @@ const interpolationMappings: Array<InterpolationPair> = [
     {
         key: "timestamp",
         getValue: (context: LogContext) => {
+            if (!context.timestamp) {
+                throw Error("Context did not have a timestamp field set!");
+            }
             // For now, specify time like: YYYY-MM-DD HH-MM-SS in 24-hour mode
             return context.timestamp
                 .toISOString()
@@ -26,18 +29,27 @@ const interpolationMappings: Array<InterpolationPair> = [
     {
         key: "loglevel",
         getValue: (context: LogContext) => {
+            if (!context.loglevel) {
+                throw Error("Context did not have a timestamp field set!");
+            }
             return LogLevelToStringMap[context.loglevel];
         },
     },
     {
         key: "message",
         getValue: (context: LogContext) => {
+            if (!context.message) {
+                throw Error("Context did not have a timestamp field set!");
+            }
             return context.message;
         },
     },
     {
         key: "source",
         getValue: (context: LogContext) => {
+            if (!context.source) {
+                throw Error("Context did not have a timestamp field set!");
+            }
             return context.source;
         },
     },
@@ -70,10 +82,12 @@ export class FormatStringError extends Error {
  */
 export class InterpolatedLogFormatter {
     private _formatString: string;
+    private _applyTimestamp: boolean;
     private _interpolationPoints: Array<InterpolationPoint>;
 
-    constructor(formatString: string) {
+    constructor(formatString: string, applyTimestamp: boolean) {
         this._formatString = formatString;
+        this._applyTimestamp = applyTimestamp;
         this._interpolationPoints = [];
 
         this.cacheInterpolationPoints();
@@ -175,6 +189,15 @@ export class InterpolatedLogFormatter {
                         1}, ${currentClosedBracketIndex - 1}
                     `
                 );
+            }
+
+            // If we are not applying timestamps (because we don't trust this devices
+            // view of the time), skip the timestamp format-type
+            if (!this._applyTimestamp) {
+                if (interpolationType === "timestamp") {
+                    lastIndex = currentClosedBracketIndex;
+                    continue;
+                }
             }
 
             // We're all good, cache this type along with the location it was found

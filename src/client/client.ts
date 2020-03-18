@@ -22,6 +22,7 @@ import { LogContext } from "./log-context";
 export interface ClientSettings {
     sinks: Array<ILoggerSink>;
     formatter: ILogFormatter;
+    source: string;
 }
 
 export abstract class ILoggerClient {
@@ -33,6 +34,15 @@ export abstract class ILoggerClient {
     abstract Warning(message: string): Promise<void>;
     abstract Error(message: string): Promise<void>;
     abstract Fatal(message: string): Promise<void>;
+
+    // This is a special function which should only be called for log messages
+    // which have already been formatted, except the {timestamp} format type
+    // LoggerClients have a flag which indicates if they should be filling
+    // out timestamps.
+
+    // If you wish to use the timestamp relative to the client, then simply
+    // set that flag on the LoggerClient
+    abstract WriteMessageWithTimestampOnly(message: string): Promise<void>;
 
     abstract AddSink(sink: ILoggerSink): void;
 
@@ -50,16 +60,22 @@ export abstract class ILoggerClient {
 }
 
 export class Logger extends ILoggerClient {
+    async WriteMessageWithTimestampOnly(message: string): Promise<void> {
+        // Same as the typical Logger methods, but we expect '{timestamp}' is possibly
+        // present still.
+    }
+
     AddSink(sink: ILoggerSink): void {
         this._settings.sinks.push(sink);
     }
+
     async Debug(message: string): Promise<void> {
         // Build the context, format the log then sink it
         const context = {
             timestamp: new Date(),
             loglevel: LogLevel.Debug,
             message: message,
-            source: "Source",
+            source: this._settings.source,
         } as LogContext;
 
         const formattedMessage = this._settings.formatter.format(context);
@@ -74,7 +90,7 @@ export class Logger extends ILoggerClient {
             timestamp: new Date(),
             loglevel: LogLevel.Warning,
             message: message,
-            source: "Source",
+            source: this._settings.source,
         } as LogContext;
 
         const formattedMessage = this._settings.formatter.format(context);
@@ -89,7 +105,7 @@ export class Logger extends ILoggerClient {
             timestamp: new Date(),
             loglevel: LogLevel.Error,
             message: message,
-            source: "Source",
+            source: this._settings.source,
         } as LogContext;
 
         const formattedMessage = this._settings.formatter.format(context);
@@ -104,7 +120,7 @@ export class Logger extends ILoggerClient {
             timestamp: new Date(),
             loglevel: LogLevel.Fatal,
             message: message,
-            source: "Source",
+            source: this._settings.source,
         } as LogContext;
 
         const formattedMessage = this._settings.formatter.format(context);
@@ -119,7 +135,7 @@ export class Logger extends ILoggerClient {
             timestamp: new Date(),
             loglevel: LogLevel.Info,
             message: message,
-            source: "Source",
+            source: this._settings.source,
         } as LogContext;
 
         const formattedMessage = this._settings.formatter.format(context);

@@ -30,7 +30,8 @@ describe("Logger Client", () => {
         // Create the logger instance, reseting any lingering state
         logger = new Logger({
             sinks: [new TestLogSink()],
-            formatter: new InterpolatedLogFormatter("{message}"),
+            formatter: new InterpolatedLogFormatter("{message}", true),
+            source: "Source",
         });
         lastMessage = "";
     });
@@ -86,7 +87,8 @@ describe("Logger Client", () => {
         // Then add another custom sink, ensure we are receiving messages on both
         let _logger = new Logger({
             sinks: [],
-            formatter: new InterpolatedLogFormatter("{message}"),
+            formatter: new InterpolatedLogFormatter("{message}", true),
+            source: "Source",
         });
 
         _logger.AddSink(new TestLogSink());

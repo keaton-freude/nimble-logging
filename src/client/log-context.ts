@@ -10,11 +10,11 @@ import { LogLevel } from "./log-level";
 // and message), while others are created internally (time-stamp)
 export interface LogContext {
     // What time was this log received?
-    timestamp: Date;
+    timestamp?: Date;
     // What level was this log?
-    loglevel: LogLevel;
+    loglevel?: LogLevel;
     // What was the log message?
-    message: string;
+    message?: string;
     // Who was the source of the message?
-    source: string;
+    source?: string;
 }
