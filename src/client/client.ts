@@ -36,6 +36,12 @@ export abstract class ILoggerClient {
 
     abstract AddSink(sink: ILoggerSink): void;
 
+    // really wish I could provide an immutable view of these sinks
+    // for safety purposes..
+    GetSinks(): Array<ILoggerSink> {
+        return this._settings.sinks;
+    }
+
     protected _settings: ClientSettings;
 
     constructor(settings: ClientSettings) {
